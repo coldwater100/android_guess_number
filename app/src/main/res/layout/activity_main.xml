@@ -59,17 +59,19 @@
             android:ems="10"
             android:inputType="text"
             android:text=""
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:autofillHints="fill answer"
+            tools:ignore="LabelFor" />
     </LinearLayout>
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="112dp"
+        android:layout_marginStart="208dp"
         android:layout_marginTop="360dp"
         android:text="결과 확인"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -99,5 +101,16 @@
             android:textSize="28sp" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/set_quiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="360dp"
+        android:text="새 문제내기"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

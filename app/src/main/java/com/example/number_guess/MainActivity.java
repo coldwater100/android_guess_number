@@ -3,6 +3,7 @@ package com.example.number_guess;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -14,11 +15,13 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    TextView tvLeft;
-    TextView tvRight;
-    TextView tvOperand;
-    Button btnCheck;
-    TextView tvAnswer;
+    private TextView tvLeft;
+    private TextView tvRight;
+    private TextView tvOperand;
+    private EditText edAnswer;
+    private Button btnCheck;
+    private TextView tvAnswer;
+    private Button btnSetQuiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +38,18 @@ public class MainActivity extends AppCompatActivity {
         tvRight = findViewById(R.id.tv_right_number);
         tvOperand = findViewById(R.id.tv_operand);
 
+        edAnswer = findViewById(R.id.edit_answer);
+
         btnCheck = findViewById(R.id.button);
         tvAnswer = findViewById(R.id.tv_right_answer);
 
+        btnSetQuiz = findViewById(R.id.set_quiz);
 
+        initializeButton();
+        setQuiz();
+    }
+
+    public void initializeButton(){
         btnCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,11 +67,32 @@ public class MainActivity extends AppCompatActivity {
                     strAnswer = tvLeft.getText() + " - " + tvRight.getText() + " = " + nAnswer;
                     tvAnswer.setText(strAnswer);
                 }
+
+                try{
+                    int nPredicted = Integer.parseInt(edAnswer.getText().toString());
+                    if(nPredicted == nAnswer) {
+                        new SimpleConfirmDialog(MainActivity.this, "정답",
+                                "정답입니다").createAndShow();
+                    } else {
+                        new SimpleConfirmDialog(MainActivity.this, "오답",
+                                "다음 문제에 다시 도전해 보세요").createAndShow();
+                    }
+                } catch (NumberFormatException e){
+                    new SimpleConfirmDialog(MainActivity.this, "Error",
+                            "입력하신 내용이 숫자가 아닙니다").createAndShow();
+                }
             }
         });
 
-        setQuiz();
+        btnSetQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setQuiz();
+            }
+        });
+
     }
+
 
     private void setQuiz() {
         Random random = new Random();
@@ -74,5 +106,8 @@ public class MainActivity extends AppCompatActivity {
             case 0 : tvOperand.setText("+"); break;
             case 1 : tvOperand.setText("-"); break;
         }
+        edAnswer.setText("");
+        tvAnswer.setText("");
     }
+
 }
